@@ -11,18 +11,18 @@ st.title('Interactive Coretime Market Simulator')
 # Sidebar configuration
 st.sidebar.header('Market Parameters')
 supply = st.sidebar.number_input('Cores available', value=10, min_value=1, key='supply')
-premium_pct = st.sidebar.slider('Premium (%)', 100.0, 500.0, 300.0)
+premium_pct = st.sidebar.slider('Premium (%)', 100.0, 500.0, 200.0)
 premium = premium_pct / 100.0
-desired = st.sidebar.slider('Target Utilization', 0.0, 1.0, 0.7, key='desired')
-k = st.sidebar.slider('Sensitivity k', 0.0, 5.0, 3.0, key='k')
+desired = st.sidebar.slider('Target Utilization', 0.0, 1.0, 0.9, key='desired')
+k = st.sidebar.slider('Sensitivity k', 0.0, 5.0, 2.0, key='k')
 players = int(st.sidebar.number_input('Number of bidders', 1, 50, 3, key='players'))
 
 # Initialize session state on first run
 if 'round' not in st.session_state:
     # Start at round 0 with initial reserve
     st.session_state.round = 0
-    st.session_state.reserve_price = 1.0
-    st.session_state.initial_reserve = 1.0
+    st.session_state.reserve_price = 1000.0
+    st.session_state.initial_reserve = 1000.0
     # Seed history with initial point at round 0
     st.session_state.history = pd.DataFrame([{  
         'round': 0,
