@@ -91,7 +91,7 @@ def run_auction(raw_bids, player_ids, supply, reserve_price, premium):
 # 6) adjust_reserve_price: exponential-of-error update, floored at 1
 def adjust_reserve_price(p_old, capacity, desired, k=1.0, p_min=1):
     p_new = p_old * np.exp(k * (capacity - desired))
-    # special rule to allow for recovery after very low prices. We have a minimum increment of e.g., 100 DOT if the system is on full capacity.
+    # special rule to allow forsou recovery after very low prices. We have a minimum increment of e.g., 100 DOT if the system is on full capacity.
     if capacity >= 1.0:
         p_new = max(p_new, p_old + 100)
 

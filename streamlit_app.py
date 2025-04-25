@@ -43,7 +43,6 @@ for i in range(players):
         p = st.number_input(f'P{i+1} price', min_value=0.0, step=0.01, key=f'p{i}')
     bid_data.append((q, p))
 
-# Handle submission
 if st.button('Submit Bids'):
     # Run auction for this round using current reserve
     quantities = np.array([b[0] for b in bid_data])
@@ -68,15 +67,18 @@ if st.button('Submit Bids'):
     # Advance to next round
     st.session_state.round += 1
 
-    # Append to history using the engine's p_clear directly
-    st.session_state.history = st.session_state.history.append({
+    # Create a new DataFrame for the new row
+    new_row = pd.DataFrame([{
         'round':         st.session_state.round,
         'reserve_price': new_rp,
         'p_clear':       out['p_clear'],
         'capacity':      out['capacity'],
         'sold':          out['sold'],
         'unsold':        out['unsold']
-    }, ignore_index=True)
+    }])
+
+    # Append to history using concat
+    st.session_state.history = pd.concat([st.session_state.history, new_row], ignore_index=True)
 
     # Update reserve price AFTER appending
     st.session_state.reserve_price = new_rp
